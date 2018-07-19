@@ -95,6 +95,17 @@ source $ZSH/oh-my-zsh.sh
 
 alias vim="vim -g --remote-tab-silent"
 
-export GDK_SCALE=2
-export GDK_DPI_SCALE=0.5
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+function check_last_exit_code() {
+    local LAST_EXIT_CODE=$?
+    if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+        local EXIT_CODE_PROMPT=' '
+        EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+        EXIT_CODE_PROMPT+="%{$fg_bold[red]%}$LAST_EXIT_CODE%{$reset_color%}"
+        EXIT_CODE_PROMPT+="%{$fg[red]%}-%{$reset_color%}"
+        echo "$EXIT_CODE_PROMPT"
+    fi
+}
+
+RPROMPT='$(check_last_exit_code)'
