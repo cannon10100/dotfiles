@@ -13,6 +13,7 @@ set expandtab
 set smartindent
 
 set spell spelllang=en_us
+set spellfile=$HOME/.vim/en.utf-8.add
 
 set number
 set showcmd
@@ -31,7 +32,6 @@ filetype plugin indent on
 filetype plugin on
 syntax on
 
-colorscheme darcula
 
 set updatetime=250
 let g:gitgutter_realtime = 1
@@ -96,3 +96,5 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 call plug#end()
+
+colorscheme darcula
