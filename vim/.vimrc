@@ -69,9 +69,29 @@ let g:sneak#label = 1
 let g:ycm_always_populate_location_list = 1
 
 nnoremap gd :YcmCompleter GoTo<CR>
+nnoremap <leader>fi :YcmCompleter FixIt<CR>
+nnoremap <leader>tp :YcmCompleter GetType<CR>
+nnoremap <leader>in :YcmCompleter GoToInclude<CR>
+nnoremap <leader>yd :YcmDiags<CR>
 
 let g:scratch_autohide = 1
 let g:scratch_persistence_file = "/home/cannon/.vim/scratch.txt"
+
+let g:racer_cmd = "/home/cannon/.cargo/bin/racer"
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+let g:clang_format#code_style = "llvm"
+autocmd FileType c,cpp,objc nnoremap <leader>gq :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <leader>gq :ClangFormat<CR>
 
 call plug#begin()
 Plug 'justinmk/vim-sneak'
@@ -87,6 +107,15 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
+Plug 'neomake/neomake'
+Plug 'milkypostman/vim-togglelist'
+Plug 'racer-rust/vim-racer'
+Plug 'mechatroner/rainbow_csv'
+Plug 'vim-scripts/LargeFile'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ervandew/supertab'
+Plug 'rhysd/vim-clang-format'
 if has('nvim')
   "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -96,5 +125,12 @@ else
 endif
 "let g:deoplete#enable_at_startup = 1
 call plug#end()
+
+call neomake#configure#automake('w')
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 colorscheme darcula
